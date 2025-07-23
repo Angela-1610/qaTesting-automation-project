@@ -1,0 +1,39 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
+
+# Setup Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--start-maximized")
+
+# Initialize the Chrome driver (Make sure ChromeDriver is in PATH or specify its location)
+driver = webdriver.Chrome(service=Service(), options=chrome_options)
+
+try:
+    # Open the web application
+    base_url = "https://lambdatest.github.io/sample-todo-app/"
+    driver.get(base_url)
+    time.sleep(2)
+
+    # Add new item to the list
+    add = driver.find_element(By.ID, "sampletodotext")
+    add.send_keys("Angela Internship")
+    time.sleep(1)
+
+    add_button = driver.find_element(By.ID, "addbutton")
+    add_button.click()
+    time.sleep(1)
+
+    # Mark one item as checked (using its name attribute)
+    checked = driver.find_element(By.CSS_SELECTOR, "input[name='li3']")
+    checked.click()
+
+    time.sleep(2)
+
+    # as the website I used not have Deleted function to test
+    # if there is deleted function will do same as above but to delete
+
+finally:
+    driver.quit()
